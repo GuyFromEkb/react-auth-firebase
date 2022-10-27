@@ -1,5 +1,5 @@
 export interface IFormProps {
-  type?: "register" | "login";
+  isRegister?: boolean;
   submitData?: (email: string, password: string) => void;
 }
 

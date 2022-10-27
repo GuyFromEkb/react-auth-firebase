@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { IFormProps, IForm } from "./types";
 import "./Form.scss";
 
-const Form: FC<IFormProps> = ({ type = "login", submitData }) => {
+const Form: FC<IFormProps> = ({ isRegister, submitData }) => {
   const {
     register,
     handleSubmit,
@@ -17,7 +17,7 @@ const Form: FC<IFormProps> = ({ type = "login", submitData }) => {
   });
 
   const onSubmit: SubmitHandler<IForm> = ({ email, password }) => {
-    console.log("DSADAS");
+    submitData!(email, password);
   };
 
   return (
@@ -34,7 +34,7 @@ const Form: FC<IFormProps> = ({ type = "login", submitData }) => {
         <span>{errors.password?.message || ""}</span>
       </label>
 
-      <button> {type === "register" ? "Зарегистрироваться" : "Войти"}</button>
+      <button> {isRegister ? "Зарегистрироваться" : "Войти"}</button>
     </form>
   );
 };
