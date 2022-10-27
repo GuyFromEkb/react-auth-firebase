@@ -1,47 +1,41 @@
 import { FC } from "react";
+import { formSchema } from "./validation";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { IFormProps, IForm } from "./types";
 import "./Form.scss";
 
-interface IProps {
-  type?: "register" | "login";
-  submitData?: (email: string, password: string) => void;
-}
+const Form: FC<IFormProps> = ({ type = "login", submitData }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForm>({
+    resolver: yupResolver(formSchema),
+    mode: "onBlur",
+    reValidateMode: "onChange",
+  });
 
-const Form: FC<IProps> = ({ type = "login", submitData }) => {
-  //   const onSubmit = (e: React.FormEvent) => {
-  //     e.preventDefault();
-
-  //     // const formData = new FormData(e.target);
-  //     // const data = new FormData(e.target as unknown as HTMLFormElement);
-  //     const data = new FormData(e.currentTarget);
-  //     console.log(data.get("email"));
-  //     // submitData()
-  //   };
-
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
+  const onSubmit: SubmitHandler<IForm> = ({ email, password }) => {
+    console.log("DSADAS");
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className="form">
-        <label>
-          <p>Email</p>
-          <input name="email" type="email" />
-        </label>
+    <form onSubmit={handleSubmit(onSubmit)} className="form">
+      <label>
+        Email
+        <input {...register("email")} />
+        <span>{errors.email?.message || ""}</span>
+      </label>
 
-        <label>
-          <p>Пароль</p>
-          <input autoComplete="new-password" name="pasword" type="password" />
-        </label>
+      <label>
+        Пароль
+        <input {...register("password")} autoComplete="new-password" type="password" />
+        <span>{errors.password?.message || ""}</span>
+      </label>
 
-        <button> {type === "register" ? "Зарегистрироваться" : "Войти"}</button>
-      </form>
-    </>
+      <button> {type === "register" ? "Зарегистрироваться" : "Войти"}</button>
+    </form>
   );
 };
 
