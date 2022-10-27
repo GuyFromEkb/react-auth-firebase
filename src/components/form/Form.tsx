@@ -4,8 +4,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IFormProps, IForm } from "./types";
 import "./Form.scss";
+import { LS_PROFILE_EMAIL, LS_PROFILE_ID, LS_PROFILE_TOKEN, LS_KEY } from "../../utils/getUserTheme";
+import { authStore } from "../../store/authStore";
+import { observer } from "mobx-react-lite";
+import { useNavigate } from "react-router-dom";
 
 const Form: FC<IFormProps> = ({ isRegister, submitData }) => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -16,8 +21,21 @@ const Form: FC<IFormProps> = ({ isRegister, submitData }) => {
     reValidateMode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<IForm> = ({ email, password }) => {
-    submitData!(email, password);
+  const onSubmit: SubmitHandler<IForm> = async ({ email, password }) => {
+    const user = await submitData(email, password);
+
+    if (user) {
+      const userObj = {
+        profileEmail: String(user.email),
+        profileId: user.uid,
+        profileToken: await user.getIdToken(),
+      };
+
+      authStore.setAuthProfile = userObj;
+      const lsObj = JSON.stringify(userObj);
+      localStorage.setItem(LS_KEY, lsObj);
+      navigate({ pathname: "/" });
+    }
   };
 
   return (
@@ -39,4 +57,4 @@ const Form: FC<IFormProps> = ({ isRegister, submitData }) => {
   );
 };
 
-export default Form;
+export default observer(Form);
