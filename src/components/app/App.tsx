@@ -4,12 +4,13 @@ import LoginPage from "../../pages/login/LoginPage";
 import MainPage from "../../pages/main/MainPage";
 import RegisterPage from "../../pages/register/RegisterPage";
 import "./App.scss";
+import "../../firebase";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route element={<Layout />}>
+        <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
