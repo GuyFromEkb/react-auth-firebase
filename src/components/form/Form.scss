@@ -1,0 +1,12 @@
+.form {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  label {
+    width: 100%;
+  }
+  input {
+    width: 100%;
+  }
+}

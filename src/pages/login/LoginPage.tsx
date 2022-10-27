@@ -1,9 +1,19 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
+import Form from "../../components/form/Form";
 
-// import "./LoginPage.scss";
+import "./LoginPage.scss";
 
 const LoginPage: FC = () => {
-  return <>Hello From Login Page</>;
+  return (
+    <>
+      <Form />
+      <p className="no-acc">
+        Нет аккаунта?
+        <Link to="/register"> Зарегистрируйтесь!</Link>
+      </p>
+    </>
+  );
 };
 
 export default LoginPage;
