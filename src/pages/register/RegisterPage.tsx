@@ -1,5 +1,6 @@
 import { FC } from "react";
 import Form from "../../components/form/Form";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 // import "./RegisterPage.scss";
 
