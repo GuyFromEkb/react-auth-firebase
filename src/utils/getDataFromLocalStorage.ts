@@ -16,9 +16,3 @@ const getDataFromLocalStorage = (LSKey: string): any => {
 };
 
 export default getDataFromLocalStorage;
-
-// const lsObj = JSON.stringify({
-//   [LS_FIELD]: isLightTheme ? "dark" : "light",
-// });
-
-// localStorage.setItem(LS_KEY, lsObj);

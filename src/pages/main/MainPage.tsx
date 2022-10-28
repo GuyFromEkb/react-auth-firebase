@@ -7,14 +7,17 @@ import { authStore } from "../../store/authStore";
 
 const MainPage: FC = () => {
   // const { isAuth } = authStore;
+  
   // useLayoutEffect(() => {
   //   console.log("useLayot");
 
   //   authStore.init();
   // });
 
+
+
   if (!authStore.isAuth) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/register" />;
   }
 
   return (
